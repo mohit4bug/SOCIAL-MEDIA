@@ -242,7 +242,7 @@ const Profile = () => {
     const [bio, setBio] = useState("")
     const [toggleBioInput, setToggleBioInput] = useState(false)
     const { user } = useContext(AuthContext)
-    const userId = JSON.parse(user)._id
+    const userId = JSON.parse(user)?._id
     const queryClient = useQueryClient()
     let { id } = useParams();
 
@@ -384,13 +384,15 @@ const Profile = () => {
     })
 
 
+
+
     return (
         <Container>
             {/* cover picture div */}
             <CoverPictureDiv>
                 <ProfilePictureDiv>
                     {/* data?.avatar done because this was trying to fetch image earliar so i stopped it to fetch before it actually loads */}
-                    <ProfilePicture src={profile ? profilePreview : `http://localhost:8000/public/images/${data?.avatar ? data?.avatar : 'default.png'}`} />
+                    <ProfilePicture src={profilePreview ? profilePreview : `http://localhost:8000/public/images/${data?.avatar}`} />
                     <input type="file" name="profilePicture" id="profilePicture" onChange={onSelectFile} style={{ display: "none" }} />
                     {userId === data?._id && <ProfilePictureEditButton htmlFor="profilePicture">
                         <FilterHdrIcon fontSize="small" />
@@ -398,7 +400,7 @@ const Profile = () => {
                 </ProfilePictureDiv>
 
                 {/* profile picture button */}
-                <CoverPicture src={cover ? coverPreview : `http://localhost:8000/public/images/${data?.cover ? data?.cover : 'default.png'}`} alt="profile picture" />
+                <CoverPicture src={coverPreview ? coverPreview : `http://localhost:8000/public/images/${data?.cover}`} alt="profile picture" />
 
                 <input type="file" name="coverPicture" onChange={onSelectCoverFile} id="coverPicture" style={{ display: "none" }} />
                 {/* cover picture button */}

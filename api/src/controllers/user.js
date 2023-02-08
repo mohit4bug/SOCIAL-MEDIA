@@ -47,8 +47,14 @@ const followUser = async (req, res) => {
 
 const findUsers = async (req, res) => {
     try {
+        const username = req.body.username
+        const users = await userModel.find({
+            username: {
+                $regex: `(?i)${username}`,
+            }
+        })
 
-        const users = await userModel.find()
+        if (username.length < 1) return res.json({ message: 'No users found', success: true })
         return res.status(200).json({
             users,
             success: true

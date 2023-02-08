@@ -6,7 +6,7 @@ const router = require('express').Router()
 
 
 router.get('/follow/:id', followUser)
-router.get('/fetchall', findUsers)
+router.post('/fetch', findUsers)
 router.post('/bio', EditBio)
 router.get('/fetch/:id', fetchUser)
 

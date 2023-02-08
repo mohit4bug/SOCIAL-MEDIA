@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import { useContext, useEffect, useState } from "react";
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { AuthContext } from "../../context/authContext";
 import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
+import momemt from 'moment'
 
 const Container = styled.div`
     width: 700px;
@@ -23,7 +24,7 @@ const PostMid = styled.div`
 const PostImg = styled.img`
     height: 500px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 `
 const PostBottom = styled.div`
     width: 100%;
@@ -132,8 +133,13 @@ const PostProfileImage = styled.img`
 `
 const PostUsername = styled.p`
     font-weight: 500;
+    font-size: 18px;
     color: ${props => props.theme.textColor};
     text-transform: capitalize;
+`
+const PostTime = styled.p`
+    font-size: 12px;
+    color: ${props => props.theme.placeHolderColor};
 `
 const Caption = styled.p`
     max-height: 300px;
@@ -188,6 +194,7 @@ const Post = ({ post }) => {
                     {/* // This is temp /// */}
                     <PostProfileImage src={`http://localhost:8000/public/images/${post?.userId?.avatar}`} />
                     <PostUsername>{post?.userId?.username}</PostUsername>
+                    <PostTime>{momemt(post?.userId?.date).fromNow()}</PostTime>
                 </PostTop>
                 <Caption>
                     {post.caption}

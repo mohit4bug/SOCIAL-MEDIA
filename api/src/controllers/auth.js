@@ -6,7 +6,6 @@ const register = async (req, res) => {
     try {
         const { password, confirmPassword, username } = req.body
 
-
         if (!password || !confirmPassword || !username) return res.status(403).json({
             message: 'Please provide all necessary information',
             success: false
@@ -28,6 +27,8 @@ const register = async (req, res) => {
         const newUser = await userModel.create({
             username,
             password: hash,
+            avatar: "default.png",
+            cover: "default.png"
         })
         await newUser.save()
 
@@ -66,7 +67,7 @@ const login = async (req, res) => {
         const token = jwt.sign({
             id: isUser._id, username: isUser.username
         }, "JWTSECRET", {
-            expiresIn: "3d"
+            expiresIn: "7d"
         })
         return res.status(200).cookie('Authorization', token).json({
             message: 'User logged in successfully',

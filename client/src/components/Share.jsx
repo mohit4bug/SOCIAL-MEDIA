@@ -68,7 +68,7 @@ const Bottom = styled.div`
 const PostImage = styled.img`
     max-height: 400px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 5px;
     overflow: hidden;
 `

@@ -1,5 +1,6 @@
 const postModel = require('../models/post')
 const userModel = require('../models/user')
+const moment = require('moment')
 
 const createPost = async (req, res) => {
     try {
@@ -14,6 +15,7 @@ const createPost = async (req, res) => {
             caption,
             postImg,
             userId: req.user.id,
+            date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
         })
 
         //finding user
@@ -174,10 +176,11 @@ const likePost = async (req, res) => {
 const fetchAllPosts = async (req, res) => {
 
     try {
+
         const user = await userModel.findById(req.user.id)
 
         const posts = await postModel.find({
-            user: {
+            userId: {
                 $in: [...user.following, req.user.id]
             }
         }).populate({
@@ -185,7 +188,9 @@ const fetchAllPosts = async (req, res) => {
             populate: {
                 path: 'userId'
             }
-        }).populate('userId')
+        }).populate({
+            path: 'userId'
+        })
 
         return res.status(200).json({
             message: 'Posts fetched successfully',
